@@ -1,67 +1,55 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Http Ws</title>
+    <style>
+    
+    </style>
+</head>
+<body>
+    <input type="text">
+    <button id="sendbtn">SEND</button>
+    <div id="messages">
 
-  <meta charset="utf-8" />
-  <title>WebSocket Test</title>
-  <script language="javascript" type="text/javascript">
+    </div>
+    <script>
+        function ConsoleWriteLine(message, color) {
+            var div = document.createElement('div');
+            div.style.color = color;
+            div.innerText = message;
+            document.querySelector('#messages').appendChild(div);
+        }
 
-  var wsUri = "ws://localhost:2778/";
-  var output;
+        document.querySelector('#sendbtn').onclick = function(e) {
+            var message = document.querySelector('input').value;
+            socket.send(message);
+            ConsoleWriteLine('<-'+message, 'black');
+        }
 
-  function init()
-  {
-    output = document.getElementById("output");
-    testWebSocket();
-  }
-
-  function testWebSocket()
-  {
-    websocket = new WebSocket(wsUri);
-    websocket.onopen = function(evt) { onOpen(evt) };
-    websocket.onclose = function(evt) { onClose(evt) };
-    websocket.onmessage = function(evt) { onMessage(evt) };
-    websocket.onerror = function(evt) { onError(evt) };
-  }
-
-  function onOpen(evt)
-  {
-    writeToScreen("CONNECTED");
-    doSend("WebSocket rocks");
-  }
-
-  function onClose(evt)
-  {
-    writeToScreen("DISCONNECTED");
-  }
-
-  function onMessage(evt)
-  {
-    writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data+'</span>');
-    websocket.close();
-  }
-
-  function onError(evt)
-  {
-    writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);
-  }
-
-  function doSend(message)
-  {
-    writeToScreen("SENT: " + message);
-    websocket.send(message);
-  }
-
-  function writeToScreen(message)
-  {
-    var pre = document.createElement("p");
-    pre.style.wordWrap = "break-word";
-    pre.innerHTML = message;
-    output.appendChild(pre);
-  }
-
-  window.addEventListener("load", init, false);
-
-  </script>
-
-  <h2>WebSocket Test</h2>
-
-  <div id="output"></div>
+        socket = new WebSocket('ws://localhost:2778/');
+        socket.onopen = function(evt) { 
+                console.log('onopen'); 
+                console.log(evt); 
+                ConsoleWriteLine('connection opened', 'green');
+            };
+        socket.onclose = function(evt) { 
+                console.log('onclose'); 
+                console.log(evt); 
+                ConsoleWriteLine('connection closed', 'green');
+            };
+        socket.onmessage = function(evt) { 
+                console.log('onmessage'); 
+                console.log(evt);
+                ConsoleWriteLine('->'+evt.data, 'black');
+            };
+        socket.onerror = function(evt) { 
+                console.log('onerror'); 
+                console.log(evt); 
+                ConsoleWriteLine('error', 'red');
+            };
+    </script>
+</body>
+</html>

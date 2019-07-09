@@ -20,8 +20,8 @@ namespace VNN
         public delegate PanResponse OnRequest(PanRequest request);
         protected OnRequest onRequest;
 
-        public delegate void OnWebSocketRequest(WebSocket webSocket, string message);
-        public OnWebSocketRequest onWebSocketRequest;
+        public delegate void OnWebSocketMessage(WebSocket webSocket, string message);
+        public OnWebSocketMessage onWebSocketMessage;
         public List<WebSocket> WebSockets = new List<WebSocket>();
 
         public PanWebsite(string[] prefixes, OnRequest request)
@@ -96,7 +96,7 @@ namespace VNN
                                     ArraySegment<byte> bytesReceived = new ArraySegment<byte>(new byte[1024]);
                                     WebSocketReceiveResult result = await webSocket.ReceiveAsync(
                                         bytesReceived, CancellationToken.None);
-                                    this.onWebSocketRequest.Invoke(webSocket, Encoding.UTF8.GetString(bytesReceived.Array, 0, result.Count));
+                                    this.onWebSocketMessage.Invoke(webSocket, Encoding.UTF8.GetString(bytesReceived.Array, 0, result.Count));
                                 }
                                 this.WebSockets.Remove(webSocket);
                             });
@@ -181,7 +181,7 @@ namespace VNN
             }
             catch (Exception ex)
             {
-                throw new WebsiteException(ex);
+                //throw new WebsiteException(ex);
             }
         }
 
