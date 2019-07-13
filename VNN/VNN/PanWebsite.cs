@@ -175,13 +175,17 @@ namespace VNN
                     });
                 }
             }
+            catch(HttpListenerException ex)
+            {
+                //
+            }
             catch (ThreadAbortException ex)
             {
                 //
             }
             catch (Exception ex)
             {
-                //throw new WebsiteException(ex);
+                throw new WebsiteException(ex);
             }
         }
 

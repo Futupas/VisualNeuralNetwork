@@ -34,11 +34,13 @@
             this.console1 = new System.Windows.Forms.TextBox();
             this.btnSendMsgUsingWebsocket = new System.Windows.Forms.Button();
             this.tbMessageToWebsocket = new System.Windows.Forms.TextBox();
+            this.btnSelectFile = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // btnStartWebsite
             // 
-            this.btnStartWebsite.Location = new System.Drawing.Point(37, 49);
+            this.btnStartWebsite.Location = new System.Drawing.Point(12, 12);
             this.btnStartWebsite.Name = "btnStartWebsite";
             this.btnStartWebsite.Size = new System.Drawing.Size(239, 23);
             this.btnStartWebsite.TabIndex = 0;
@@ -48,7 +50,7 @@
             // 
             // btnStopWebsite
             // 
-            this.btnStopWebsite.Location = new System.Drawing.Point(37, 78);
+            this.btnStopWebsite.Location = new System.Drawing.Point(12, 41);
             this.btnStopWebsite.Name = "btnStopWebsite";
             this.btnStopWebsite.Size = new System.Drawing.Size(239, 23);
             this.btnStopWebsite.TabIndex = 1;
@@ -58,7 +60,7 @@
             // 
             // btnOpenHtml
             // 
-            this.btnOpenHtml.Location = new System.Drawing.Point(37, 107);
+            this.btnOpenHtml.Location = new System.Drawing.Point(12, 70);
             this.btnOpenHtml.Name = "btnOpenHtml";
             this.btnOpenHtml.Size = new System.Drawing.Size(239, 23);
             this.btnOpenHtml.TabIndex = 2;
@@ -92,11 +94,26 @@
             this.tbMessageToWebsocket.Size = new System.Drawing.Size(285, 20);
             this.tbMessageToWebsocket.TabIndex = 5;
             // 
+            // btnSelectFile
+            // 
+            this.btnSelectFile.Location = new System.Drawing.Point(40, 195);
+            this.btnSelectFile.Name = "btnSelectFile";
+            this.btnSelectFile.Size = new System.Drawing.Size(167, 23);
+            this.btnSelectFile.TabIndex = 6;
+            this.btnSelectFile.Text = "Select file with NN\'s data";
+            this.btnSelectFile.UseVisualStyleBackColor = true;
+            this.btnSelectFile.Click += new System.EventHandler(this.BtnSelectFile_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.Filter = "JSON files|*.json|All files|*.*";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(660, 589);
+            this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.tbMessageToWebsocket);
             this.Controls.Add(this.btnSendMsgUsingWebsocket);
             this.Controls.Add(this.console1);
@@ -119,6 +136,8 @@
         private System.Windows.Forms.TextBox console1;
         private System.Windows.Forms.Button btnSendMsgUsingWebsocket;
         private System.Windows.Forms.TextBox tbMessageToWebsocket;
+        private System.Windows.Forms.Button btnSelectFile;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 

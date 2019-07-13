@@ -29,7 +29,7 @@
             ConsoleWriteLine('<-'+message, 'black');
         }
 
-        socket = new WebSocket('ws://localhost:2778/');
+        socket = new WebSocket('ws://192.168.0.111:2778/');
         socket.onopen = function(evt) { 
                 console.log('onopen'); 
                 console.log(evt); 
