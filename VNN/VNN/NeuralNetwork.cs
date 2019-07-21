@@ -22,15 +22,14 @@ namespace VNN
             this.learning_rate = learning_rate;
 
             this.Network = new Neuron[layers_count + 2][];
-            Network[0] = new Neuron[inputs_count + 1];
+            Network[0] = new Neuron[inputs_count];
             for (int i = 1; i < Network.Length - 1; i++)
             {
                 Network[i] = new Neuron[neurons_count];
             }
             Network[Network.Length - 1] = new Neuron[1];
 
-            Network[0][0] = new Neuron(true, 0, random);
-            for (int j = 1; j < Network[0].Length; j++) //i - layer, j - neuron in layer
+            for (int j = 0; j < Network[0].Length; j++) //i - layer, j - neuron in layer
             {
                 Network[0][j] = new Neuron(false, 0, random);
             }

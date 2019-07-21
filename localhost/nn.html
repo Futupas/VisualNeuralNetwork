@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NN</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        #main{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+
+        }
+        #main > .layer{
+            height: 100%;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        #main > .layer > .neuron{
+            display: block;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="main">
+        <!-- <div class="layer">
+            <div class="neuron"></div>
+            <div class="neuron"></div>
+        </div>
+        <div class="layer">
+            <div class="neuron"></div>
+            <div class="neuron"></div>
+            <div class="neuron"></div>
+            <div class="neuron"></div>
+            <div class="neuron"></div>
+        </div>
+        <div class="layer">
+            <div class="neuron"></div>
+            <div class="neuron"></div>
+            <div class="neuron"></div>
+            <div class="neuron"></div>
+            <div class="neuron"></div>
+        </div> -->
+    </div>
+
+    <script>
+        var DATA = {
+            neurons_distance: 100,
+            layers_distance: 150,
+            neuron_side: 50,
+            neuron_border: 2,
+            weight_line_width: 5
+        }
+        var MAIN_DIV = document.getElementById('main');
+
+        var test_nn = {
+            neurons: [
+                [1, 2],
+                [1, 2, 3, 4, 5],
+                [6, 7, 8, 9, 10],
+                [11]
+            ]
+        }
+
+        function GenerateNN(NN) {
+            var layers_count = NN.neurons.length;
+            var biggest_layer_neurons_count = NN.neurons[0].length;
+            for (var i = 1; i < layers_count; i++) {
+                if (NN.neurons[i].length > biggest_layer_neurons_count) biggest_layer_neurons_count = NN.neurons[i].length;
+            }
+            MAIN_DIV.style.height = biggest_layer_neurons_count * (DATA.neuron_side + DATA.neurons_distance) + 'px';
+            MAIN_DIV.style.width = layers_count * (DATA.neuron_side + DATA.layers_distance) + 'px';
+            for (var i = 0; i < layers_count; i++) {
+                var layer = document.createElement('div');
+                layer.classList.add('layer');
+                for (var j = 0; j < NN.neurons[i].length; j++) {
+                    var neuron = document.createElement('div');
+                    neuron.classList.add('neuron');
+                    neuron.style.margin = (DATA.neurons_distance)+'px '+(DATA.layers_distance/2)+'px';
+                    neuron.style.borderRadius = DATA.neuron_side/10+'px';
+                    neuron.style.width = DATA.neuron_side+'px';
+                    neuron.style.height = DATA.neuron_side+'px';
+                    neuron.style.border = DATA.neuron_border+'px solid black';
+                    neuron.innerText = NN.neurons[i][j];
+                    neuron.style.lineHeight = DATA.neuron_side+'px';
+                    neuron.style.fontSize = DATA.neuron_side/3+'px';
+                    neuron.style.textAlign = 'center';
+                    if (j == 0) neuron.style.marginTop = (DATA.neurons_distance/2)+'px';
+                    if (j == NN.neurons[i].length-1) neuron.style.marginBottom = (DATA.neurons_distance/2)+'px';
+                    layer.appendChild(neuron);
+                }
+                MAIN_DIV.appendChild(layer);
+            }
+            
+        }
+
+        GenerateNN(test_nn);
+
+    </script>
+</body>
+</html>
