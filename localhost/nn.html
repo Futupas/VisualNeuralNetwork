@@ -25,6 +25,17 @@
             display: block;
             box-sizing: border-box;
         }
+        #main .link{
+            position: absolute;
+        }
+        #main .link > .main_line{
+            position: absolute;
+            height: 2px;
+            border-radius: 1px;
+            border: none;
+            background-color: #000;
+            transform-origin: center left;
+        }
     </style>
 </head>
 <body>
@@ -62,25 +73,102 @@
 
         var test_nn = {
             neurons: [
-                [1, 2],
-                [1, 2, 3, 4, 5],
-                [6, 7, 8, 9, 10],
-                [11]
+                [
+                    { value: 1, element: null, weights: [] }, 
+                    { value: 2, element: null, weights: [] }
+                ],
+                [
+                    { value: 1, element: null, weights: [] }, 
+                    { value: 2, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }, 
+                    { value: 2, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }, 
+                    { value: 2, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }, 
+                    { value: 2, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }
+                ],
+                [
+                    { value: 1, element: null, weights: [] }, 
+                    { value: 2, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }, 
+                    { value: 2, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }, 
+                    { value: 2, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }, 
+                    { value: 2, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }
+                ],
+                [
+                    { value: 1, element: null, weights: [] }, 
+                    { value: 2, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }, 
+                    { value: 2, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }, 
+                    { value: 2, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }, 
+                    { value: 2, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }
+                ],
+                [
+                    { value: 1, element: null, weights: [
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}, 
+                        {value: .6, element: null}] }
+                ],
             ]
         }
 
-        function GenerateNN(NN) {
-            var layers_count = NN.neurons.length;
-            var biggest_layer_neurons_count = NN.neurons[0].length;
+        function GenerateNN() {
+            var layers_count = test_nn.neurons.length;
+            var biggest_layer_neurons_count = test_nn.neurons[0].length;
             for (var i = 1; i < layers_count; i++) {
-                if (NN.neurons[i].length > biggest_layer_neurons_count) biggest_layer_neurons_count = NN.neurons[i].length;
+                if (test_nn.neurons[i].length > biggest_layer_neurons_count) biggest_layer_neurons_count = test_nn.neurons[i].length;
             }
             MAIN_DIV.style.height = biggest_layer_neurons_count * (DATA.neuron_side + DATA.neurons_distance) + 'px';
             MAIN_DIV.style.width = layers_count * (DATA.neuron_side + DATA.layers_distance) + 'px';
             for (var i = 0; i < layers_count; i++) {
                 var layer = document.createElement('div');
                 layer.classList.add('layer');
-                for (var j = 0; j < NN.neurons[i].length; j++) {
+                for (var j = 0; j < test_nn.neurons[i].length; j++) {
                     var neuron = document.createElement('div');
                     neuron.classList.add('neuron');
                     neuron.style.margin = (DATA.neurons_distance)+'px '+(DATA.layers_distance/2)+'px';
@@ -88,21 +176,69 @@
                     neuron.style.width = DATA.neuron_side+'px';
                     neuron.style.height = DATA.neuron_side+'px';
                     neuron.style.border = DATA.neuron_border+'px solid black';
-                    neuron.innerText = NN.neurons[i][j];
+                    neuron.innerText = test_nn.neurons[i][j].value;
                     neuron.style.lineHeight = DATA.neuron_side+'px';
                     neuron.style.fontSize = DATA.neuron_side/3+'px';
                     neuron.style.textAlign = 'center';
                     if (j == 0) neuron.style.marginTop = (DATA.neurons_distance/2)+'px';
-                    if (j == NN.neurons[i].length-1) neuron.style.marginBottom = (DATA.neurons_distance/2)+'px';
+                    if (j == test_nn.neurons[i].length-1) neuron.style.marginBottom = (DATA.neurons_distance/2)+'px';
+                    test_nn.neurons[i][j].element = neuron;
+
                     layer.appendChild(neuron);
                 }
                 MAIN_DIV.appendChild(layer);
             }
+
+            for (var i_l = 0; i_l < layers_count; i_l++) {
+                for (var i_n = 0; i_n < test_nn.neurons[i_l].length; i_n++) {
+                    for (var i_w = 0; i_w < test_nn.neurons[i_l][i_n].weights.length; i_w++) {
+                        test_nn.neurons[i_l][i_n].weights[i_w].element = GenerateLink(i_l, i_w, i_n, test_nn.neurons[i_l][i_n].weights[i_w].value)
+                    }
+                }
+            }
             
         }
+        function GenerateLink(this_layer, from_neuron, to_neuron, value) {
+            var link = document.createElement('div');
+            link.classList.add('link');
+            var main_line = document.createElement('div');
+            main_line.classList.add('main_line');
 
-        GenerateNN(test_nn);
+            link.style.width = DATA.layers_distance + 'px';
+            var from_top = test_nn.neurons[this_layer-1][from_neuron].element.offsetTop;
+            from_top += DATA.neuron_side / (test_nn.neurons[this_layer].length <= 1 ? 2 : test_nn.neurons[this_layer].length) * (test_nn.neurons[this_layer].length <= 1 ? 1 : to_neuron);
+
+            var to_top = test_nn.neurons[this_layer][to_neuron].element.offsetTop;
+            to_top += DATA.neuron_side / (test_nn.neurons[this_layer-1].length + 1) * (from_neuron + 1);
+
+            link.style.top = (from_top < to_top ? from_top : to_top) + 'px';
+            link.style.height = Math.abs(from_top - to_top) + 'px';
+            link.style.left = (this_layer-1) * (DATA.neuron_side + DATA.layers_distance) + DATA.neuron_side + (DATA.layers_distance/2) + 'px';
+
+
+            var length = Math.sqrt(Math.pow(from_top - to_top, 2) + Math.pow(DATA.layers_distance, 2));
+            main_line.style.width = length + 'px';
+            main_line.style.left = '0px';
+            if (from_top >= to_top) {
+                main_line.style.bottom = '0px';
+            }
+            else {
+                main_line.style.top = '0px';
+            }
+            main_line.style.transform = 'Rotate('+Math.asin((to_top - from_top)/length)+'rad)';
+
+            link.appendChild(main_line);
+
+            MAIN_DIV.appendChild(link);
+
+            return link;
+        }
+
+        GenerateNN();
 
     </script>
 </body>
 </html>
+<!--
+var a = GenerateLink(1, 0, 1, 5);
+-->
