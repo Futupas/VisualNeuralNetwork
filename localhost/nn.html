@@ -14,12 +14,14 @@
             position: absolute;
             top: 0px;
             left: 0px;
+            z-index: 1;
 
         }
         #main > .layer{
             height: 100%;
             display: table-cell;
             vertical-align: middle;
+            z-index: 10;
         }
         #main > .layer > .neuron{
             display: block;
@@ -27,6 +29,12 @@
         }
         #main .link{
             position: absolute;
+            /* z-index: 0; */
+            display: block;
+        }
+        #main .link.invisible{
+            position: absolute;
+            display: none;
         }
         #main .link > .main_line{
             position: absolute;
@@ -35,12 +43,15 @@
             border: none;
             background-color: #000;
             transform-origin: center left;
+            text-align: center;
+            z-index: 30;
         }
         #main .link .circle_weight{
             position: absolute;
             border: 1px solid black;
             background-color: #fff;
             text-align: center;
+            z-index: 40;
         }
         #main .link .main_line .arrow {
             width: 0;
@@ -51,7 +62,31 @@
             position: absolute;
             right: 6px;
             top: -6px;
+            z-index: 30;
         }
+        #main .link .main_line .main_weight{
+            position: absolute;
+            height: 20px;
+            line-height: 20px;
+            font-size: 10px;
+            padding: 0px 6px;
+            border-radius: 10px;
+            top: -9px;
+            border: 1px solid black;
+            background-color: #fff;
+            text-align: center;
+            display: none;
+            z-index: 40;
+            margin-left: -15px;
+        }
+        #main .link .main_line .main_weight.visible{
+            display: inline-block;
+            z-index: 50;
+        }
+        /* #main .link .main_line:hover .main_weight{
+            display: inline-block;
+            z-index: 1000000;
+        } */
     </style>
 </head>
 <body>
@@ -133,6 +168,7 @@
             for (var i = 0; i < layers_count; i++) {
                 var layer = document.createElement('div');
                 layer.classList.add('layer');
+                layer.setAttribute('data-layer_id', i);
                 for (var j = 0; j < test_nn.neurons[i].length; j++) {
                     var neuron = document.createElement('div');
                     neuron.classList.add('neuron');
@@ -148,6 +184,57 @@
                     if (j == 0) neuron.style.marginTop = (DATA.neurons_distance/2)+'px';
                     if (j == test_nn.neurons[i].length-1) neuron.style.marginBottom = (DATA.neurons_distance/2)+'px';
                     test_nn.neurons[i][j].element = neuron;
+
+                    neuron.data = {
+                        layer: i,
+                        neuron: j
+                    };
+                    neuron.onmouseenter = function(e) {
+                        // console.log(this.data);
+                        var current_layer = this.data.layer;
+                        var current_neuron = this.data.neuron;
+                        //all neurons of current layer
+                        for (var _i = 0; _i < test_nn.neurons[current_layer].length; _i++) {
+                            if (_i == current_neuron) continue;
+                            for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
+                                test_nn.neurons[current_layer][_i].weights[_j].element.classList.add('invisible');
+                                // test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.add('visible');
+                            }
+                        }
+                        //all neurons of next layer
+                        for (var _i = 0; _i < test_nn.neurons[current_layer+1].length; _i++) {
+                            for(var _j = 0; _j < test_nn.neurons[current_layer+1][_i].weights.length; _j++) {
+                                if (_j == current_neuron) {
+                                    test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.add('visible');
+                                    continue;
+                                }
+                                test_nn.neurons[current_layer+1][_i].weights[_j].element.classList.add('invisible');
+                            }
+                        }
+                    };
+                    neuron.onmouseleave = function(e) {
+                        // console.log(this.data);
+                        var current_layer = this.data.layer;
+                        var current_neuron = this.data.neuron;
+                        //all neurons of current layer
+                        for (var _i = 0; _i < test_nn.neurons[current_layer].length; _i++) {
+                            if (_i == current_neuron) continue;
+                            for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
+                                test_nn.neurons[current_layer][_i].weights[_j].element.classList.remove('invisible');
+                                test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.remove('visible');
+                            }
+                        }
+                        //all neurons of next layer
+                        for (var _i = 0; _i < test_nn.neurons[current_layer+1].length; _i++) {
+                            for(var _j = 0; _j < test_nn.neurons[current_layer+1][_i].weights.length; _j++) {
+                                if (_j == current_neuron) {
+                                    test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.add('visible');
+                                    continue;
+                                }
+                                test_nn.neurons[current_layer+1][_i].weights[_j].element.classList.remove('invisible');
+                            }
+                        }
+                    };
 
                     layer.appendChild(neuron);
                 }
@@ -221,7 +308,12 @@
             }
             main_line.style.transform = 'Rotate('+Math.asin((to_top - from_top)/length)+'rad)';
 
+            var main_weight = document.createElement('div');
+            main_weight.classList.add('main_weight');
+            main_weight.innerHTML = value;
+
             main_line.appendChild(arrow);
+            main_line.appendChild(main_weight);
             link.appendChild(main_line);
             link.appendChild(start_weight);
             link.appendChild(end_weight);
