@@ -195,17 +195,21 @@
                         var current_neuron = this.data.neuron;
                         //all neurons of current layer
                         for (var _i = 0; _i < test_nn.neurons[current_layer].length; _i++) {
-                            if (_i == current_neuron) continue;
+                            if (_i == current_neuron) {
+                                for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
+                                    test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.add('visible');
+                                }
+                                continue;
+                            };
                             for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
                                 test_nn.neurons[current_layer][_i].weights[_j].element.classList.add('invisible');
-                                // test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.add('visible');
                             }
                         }
                         //all neurons of next layer
                         for (var _i = 0; _i < test_nn.neurons[current_layer+1].length; _i++) {
                             for(var _j = 0; _j < test_nn.neurons[current_layer+1][_i].weights.length; _j++) {
                                 if (_j == current_neuron) {
-                                    test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.add('visible');
+                                    test_nn.neurons[current_layer+1][_i].weights[_j].element.querySelector('.main_weight').classList.add('visible');
                                     continue;
                                 }
                                 test_nn.neurons[current_layer+1][_i].weights[_j].element.classList.add('invisible');
@@ -218,17 +222,21 @@
                         var current_neuron = this.data.neuron;
                         //all neurons of current layer
                         for (var _i = 0; _i < test_nn.neurons[current_layer].length; _i++) {
-                            if (_i == current_neuron) continue;
+                            if (_i == current_neuron) {
+                                for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
+                                    test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.remove('visible');
+                                }
+                                continue;
+                            };
                             for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
                                 test_nn.neurons[current_layer][_i].weights[_j].element.classList.remove('invisible');
-                                test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.remove('visible');
                             }
                         }
                         //all neurons of next layer
                         for (var _i = 0; _i < test_nn.neurons[current_layer+1].length; _i++) {
                             for(var _j = 0; _j < test_nn.neurons[current_layer+1][_i].weights.length; _j++) {
                                 if (_j == current_neuron) {
-                                    test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.add('visible');
+                                    test_nn.neurons[current_layer+1][_i].weights[_j].element.querySelector('.main_weight').classList.remove('visible');
                                     continue;
                                 }
                                 test_nn.neurons[current_layer+1][_i].weights[_j].element.classList.remove('invisible');
