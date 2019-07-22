@@ -36,6 +36,22 @@
             background-color: #000;
             transform-origin: center left;
         }
+        #main .link .circle_weight{
+            position: absolute;
+            border: 1px solid black;
+            background-color: #fff;
+            text-align: center;
+        }
+        #main .link .main_line .arrow {
+            width: 0;
+            height: 0;
+            border-top: 7px solid transparent;
+            border-left: 15px solid black;
+            border-bottom: 7px solid transparent;
+            position: absolute;
+            right: 6px;
+            top: -6px;
+        }
     </style>
 </head>
 <body>
@@ -84,12 +100,6 @@
                         {value: .6, element: null}] }, 
                     { value: 2, element: null, weights: [
                         {value: .6, element: null}, 
-                        {value: .6, element: null}] }, 
-                    { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}] }, 
-                    { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
                         {value: .6, element: null}] }
                 ],
                 [
@@ -97,59 +107,14 @@
                     { value: 2, element: null, weights: [
                         {value: .6, element: null}, 
                         {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
                         {value: .6, element: null}] }, 
                     { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}] }, 
-                    { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}] }, 
-                    { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}] }
-                ],
-                [
-                    { value: 1, element: null, weights: [] }, 
-                    { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}] }, 
-                    { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}] }, 
-                    { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}] }, 
-                    { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
                         {value: .6, element: null}, 
                         {value: .6, element: null}, 
                         {value: .6, element: null}] }
                 ],
                 [
                     { value: 1, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
                         {value: .6, element: null}, 
                         {value: .6, element: null}, 
                         {value: .6, element: null}] }
@@ -215,19 +180,51 @@
             link.style.height = Math.abs(from_top - to_top) + 'px';
             link.style.left = (this_layer-1) * (DATA.neuron_side + DATA.layers_distance) + DATA.neuron_side + (DATA.layers_distance/2) + 'px';
 
+            var start_weight = document.createElement('div');
+            start_weight.classList.add('circle_weight');
+            start_weight.innerHTML = value;
+            var end_weight = document.createElement('div');
+            end_weight.classList.add('circle_weight');
+            end_weight.innerHTML = value;
+            
+            var arrow = document.createElement('div');
+            arrow.classList.add('arrow');
+
+            var start_weight_size = DATA.neuron_side / (test_nn.neurons[this_layer].length <= 1 ? 2 : test_nn.neurons[this_layer].length);
+            start_weight.style.width = start_weight_size + 'px';
+            start_weight.style.height = start_weight_size + 'px';
+            start_weight.style.lineHeight = start_weight_size + 'px';
+            start_weight.style.fontSize = start_weight_size / 3 + 'px';
+            start_weight.style.borderRadius = start_weight_size / 2 + 'px';
+            start_weight.style.left = start_weight_size / -2 + 'px';
+            var end_weight_size = DATA.neuron_side / (test_nn.neurons[this_layer-1].length + 1);
+            end_weight.style.width = end_weight_size + 'px';
+            end_weight.style.height = end_weight_size + 'px';
+            end_weight.style.lineHeight = end_weight_size + 'px';
+            end_weight.style.fontSize = end_weight_size / 3 + 'px';
+            end_weight.style.borderRadius = end_weight_size / 2 + 'px';
+            end_weight.style.right = end_weight_size / -2 + 'px';
+
 
             var length = Math.sqrt(Math.pow(from_top - to_top, 2) + Math.pow(DATA.layers_distance, 2));
             main_line.style.width = length + 'px';
             main_line.style.left = '0px';
             if (from_top >= to_top) {
                 main_line.style.bottom = '0px';
+                start_weight.style.bottom = start_weight_size / -2 + 'px';
+                end_weight.style.top = end_weight_size / -2 + 'px';
             }
             else {
                 main_line.style.top = '0px';
+                start_weight.style.top = start_weight_size / -2 + 'px';
+                end_weight.style.bottom = end_weight_size / -2 + 'px';
             }
             main_line.style.transform = 'Rotate('+Math.asin((to_top - from_top)/length)+'rad)';
 
+            main_line.appendChild(arrow);
             link.appendChild(main_line);
+            link.appendChild(start_weight);
+            link.appendChild(end_weight);
 
             MAIN_DIV.appendChild(link);
 
