@@ -48,7 +48,7 @@
         }
         #main .link .circle_weight{
             position: absolute;
-            border: 1px solid black;
+            /* border: 1px solid black; */
             background-color: #fff;
             text-align: center;
             z-index: 40;
@@ -66,18 +66,18 @@
         }
         #main .link .main_line .main_weight{
             position: absolute;
-            height: 20px;
+            /* height: 20px;
             line-height: 20px;
-            font-size: 10px;
-            padding: 0px 6px;
-            border-radius: 10px;
-            top: -9px;
+            font-size: 10px; */
+            /* padding: 0px 6px; */
+            /* border-radius: 10px; */
+            /* top: -9px; */
             border: 1px solid black;
             background-color: #fff;
             text-align: center;
             display: none;
             z-index: 40;
-            margin-left: -15px;
+            /* margin-left: -15px; */
         }
         #main .link .main_line .main_weight.visible{
             display: inline-block;
@@ -186,7 +186,6 @@
                         neuron: j
                     };
                     neuron.onmouseenter = function(e) {
-                        // console.log(this.data);
                         var current_layer = this.data.layer;
                         var current_neuron = this.data.neuron;
                         //all neurons of current layer
@@ -213,7 +212,6 @@
                         }
                     };
                     neuron.onmouseleave = function(e) {
-                        // console.log(this.data);
                         var current_layer = this.data.layer;
                         var current_neuron = this.data.neuron;
                         //all neurons of current layer
@@ -286,6 +284,7 @@
             start_weight.style.fontSize = start_weight_size / 3 + 'px';
             start_weight.style.borderRadius = start_weight_size / 2 + 'px';
             start_weight.style.left = start_weight_size / -2 + 'px';
+            start_weight.style.border = DATA.neuron_border / 1.5 + 'px solid black';
             var end_weight_size = DATA.neuron_side / (test_nn.neurons[this_layer-1].length + 1);
             end_weight.style.width = end_weight_size + 'px';
             end_weight.style.height = end_weight_size + 'px';
@@ -293,6 +292,7 @@
             end_weight.style.fontSize = end_weight_size / 3 + 'px';
             end_weight.style.borderRadius = end_weight_size / 2 + 'px';
             end_weight.style.right = end_weight_size / -2 + 'px';
+            end_weight.style.border = DATA.neuron_border / 1.5 + 'px solid black';
 
             var arrow = document.createElement('div');
             arrow.classList.add('arrow');
@@ -320,6 +320,14 @@
             var main_weight = document.createElement('div');
             main_weight.classList.add('main_weight');
             main_weight.innerHTML = value;
+            main_weight.style.height = DATA.weight_line_width * 5 + 'px';
+            main_weight.style.lineHeight = DATA.weight_line_width * 5 + 'px';
+            main_weight.style.fontSize = DATA.weight_line_width * 2.5 + 'px';
+            main_weight.style.top = DATA.weight_line_width * -2 + 'px';
+            main_weight.style.borderRadius = DATA.weight_line_width * 2.5 + 'px';
+            main_weight.style.border = DATA.weight_line_width * .5 + 'px solid black';
+            main_weight.style.padding = '0px '+DATA.weight_line_width * 2+'px';
+            main_weight.style.transform = 'translateX(' + (DATA.weight_line_width*-5) +'px)';
 
             main_line.appendChild(arrow);
             main_line.appendChild(main_weight);
@@ -337,6 +345,3 @@
     </script>
 </body>
 </html>
-<!--
-var a = GenerateLink(1, 0, 1, 5);
--->
