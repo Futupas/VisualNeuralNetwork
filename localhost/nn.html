@@ -50,6 +50,7 @@
             background-color: #fff;
             text-align: center;
             z-index: 40;
+            box-sizing: border-box;
         }
         #main .link .main_line .arrow {
             width: 0;
@@ -64,6 +65,7 @@
             text-align: center;
             display: none;
             z-index: 40;
+            box-sizing: border-box;
         }
         #main .link .main_line .main_weight.visible{
             display: inline-block;
@@ -256,7 +258,7 @@
             var start_weight_size = DATA.neuron_side / (test_nn.neurons[this_layer].length <= 1 ? 2 : test_nn.neurons[this_layer].length);
             start_weight.style.width = start_weight_size + 'px';
             start_weight.style.height = start_weight_size + 'px';
-            start_weight.style.lineHeight = start_weight_size + 'px';
+            start_weight.style.lineHeight = start_weight_size - (2 * (DATA.neuron_border / 1.5)) + 'px';
             start_weight.style.fontSize = start_weight_size / 3 + 'px';
             start_weight.style.borderRadius = start_weight_size / 2 + 'px';
             start_weight.style.left = start_weight_size / -2 + 'px';
@@ -264,7 +266,7 @@
             var end_weight_size = DATA.neuron_side / (test_nn.neurons[this_layer-1].length + 1);
             end_weight.style.width = end_weight_size + 'px';
             end_weight.style.height = end_weight_size + 'px';
-            end_weight.style.lineHeight = end_weight_size + 'px';
+            end_weight.style.lineHeight = end_weight_size - (2 * (DATA.neuron_border / 1.5)) + 'px';
             end_weight.style.fontSize = end_weight_size / 3 + 'px';
             end_weight.style.borderRadius = end_weight_size / 2 + 'px';
             end_weight.style.right = end_weight_size / -2 + 'px';
@@ -297,7 +299,7 @@
             main_weight.classList.add('main_weight');
             main_weight.innerHTML = value;
             main_weight.style.height = DATA.weight_line_width * 5 + 'px';
-            main_weight.style.lineHeight = DATA.weight_line_width * 5 + 'px';
+            main_weight.style.lineHeight = (DATA.weight_line_width * 5 - (DATA.weight_line_width)) + 'px';
             main_weight.style.fontSize = DATA.weight_line_width * 2.5 + 'px';
             main_weight.style.top = DATA.weight_line_width * -2 + 'px';
             main_weight.style.borderRadius = DATA.weight_line_width * 2.5 + 'px';
