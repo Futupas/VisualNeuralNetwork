@@ -1,0 +1,25 @@
+{
+  "data_main_html_file": "D:\\PROJECTS\\VisualNeuralNetwork\\localhost\\nn.html",
+
+  "website_prefixes": [ "http://192.168.0.111:2778/" ],
+
+  "nn_layer_count": 3,
+  "nn_neurons_count": 3,
+  "nn_inputs_count": 2,
+  "nn_learning_rate": 0.1,
+
+  "ws_neurons_distance": 120,
+  "ws_layers_distance": 250,
+  "ws_neuron_side": 100,
+  "ws_neuron_border": 5,
+  "ws_weight_line_width": 6,
+  "ws_weight_number_size": 45,
+
+  "nn_learning_data": [
+    {
+      "inputs": [ 1.6, 1.6 ],
+      "output": 0.85
+    }
+  ],
+  "nn_sleep_between_learning": 10
+}
