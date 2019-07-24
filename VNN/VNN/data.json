@@ -8,22 +8,18 @@
   "nn_inputs_count": 2,
   "nn_learning_rate": 0.1,
 
-  "ws_neurons_distance": 300,
-  "ws_layers_distance": 400,
-  "ws_neuron_side": 200,
+  "ws_neurons_distance": 120,
+  "ws_layers_distance": 250,
+  "ws_neuron_side": 100,
   "ws_neuron_border": 5,
-  "ws_weight_line_width": 10,
-  "ws_weight_number_size": 50,
+  "ws_weight_line_width": 6,
+  "ws_weight_number_size": 45,
 
   "nn_learning_data": [
     {
-      "inputs": [ 1.0, 1.0 ],
-      "output": 0.0
-    },
-    {
-      "inputs": [ 0.0, 0.0 ],
-      "output": 1.0
+      "inputs": [ 1.6, 1.6 ],
+      "output": 0.85
     }
   ],
-  "nn_sleep_between_learning": 0
+  "nn_sleep_between_learning": 10
 }
