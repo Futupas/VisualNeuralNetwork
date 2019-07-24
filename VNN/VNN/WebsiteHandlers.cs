@@ -18,13 +18,23 @@ namespace VNN
         private bool website_started;
         public PanResponse WebsiteLife(PanRequest request)
         {
-            if (request.Address.Length >= 1 && request.Address[0] == "get_nn")
+            if (request.Address.Length >= 1)
             {
-                //if (File.Exists("nn.html"))
-                //    return PanResponse.ReturnHtml("nn.html");
-                //else
-                //    return PanResponse.ReturnHtml(@"D:\PROJECTS\VisualNeuralNetwork\localhost\nn.html");
-                return PanResponse.ReturnJson(new NNWebModel(Network));
+                switch (request.Address[0])
+                {
+                    case "get_nn":
+                        return PanResponse.ReturnJson(new NNWebModel(Network));
+                        break;
+                    case "nn":
+                        if (File.Exists("nn.html"))
+                            return PanResponse.ReturnHtml("nn.html");
+                        else
+                            return PanResponse.ReturnHtml(@"D:\PROJECTS\VisualNeuralNetwork\localhost\nn.html");
+                        break;
+                    default:
+                        break;
+                }
+
             }
             if (File.Exists("index.html"))
                 return PanResponse.ReturnHtml("index.html");

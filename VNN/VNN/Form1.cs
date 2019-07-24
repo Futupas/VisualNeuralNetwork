@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.WebSockets;
+using Newtonsoft.Json;
 using System.IO;
 
 namespace VNN
@@ -17,8 +18,6 @@ namespace VNN
         public Form1()
         {
             InitializeComponent();
-            Website = new PanWebsite("http://192.168.0.111:2778/", WebsiteLife);
-            Website.onWebSocketMessage = OnWebSocketMessage;
             website_started = false;
         }
 
@@ -57,7 +56,8 @@ namespace VNN
 
         private void BtnOpenHtml_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://192.168.0.111:2778");
+            System.Diagnostics.Process.Start(DATA.website_prefixes[0]+"/nn");
+            //System.Diagnostics.Process.Start("http://192.168.0.111:2778");
         }
 
         private void BtnSendMsgUsingWebsocket_Click(object sender, EventArgs e)
@@ -71,8 +71,14 @@ namespace VNN
         {
             openFileDialog1.ShowDialog();
             string fpath = openFileDialog1.FileName;
-            Network = new NN(4, 3, 2, .1);
-            MessageBox.Show(fpath);
+            //MessageBox.Show(fpath);
+            string json_data = File.ReadAllText(fpath);
+            DATA = JsonConvert.DeserializeObject<FileModel>(json_data);
+            Network = new NN((int)DATA.nn_layer_count, (int)DATA.nn_neurons_count, (int)DATA.nn_inputs_count, DATA.nn_learning_rate);
+            Website = new PanWebsite(DATA.website_prefixes, WebsiteLife);
+            //Network = new NN(4, 3, 2, .1);
+            //Website = new PanWebsite("http://192.168.0.111:2778/", WebsiteLife);
+            Website.onWebSocketMessage = OnWebSocketMessage;
         }
     }
 }

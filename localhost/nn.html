@@ -97,43 +97,60 @@
         //     weight_line_width: 2,
         //     weight_number_size: 50
         // }
+         var test_nn;// = {
+        //     neurons: [
+        //         [
+        //             { value: 1, element: null, weights: [] }, 
+        //             { value: 2, element: null, weights: [] }
+        //         ],
+        //         [
+        //             { value: 1, element: null, weights: [] }, 
+        //             { value: 2, element: null, weights: [
+        //                 {value: .6, element: null}, 
+        //                 {value: .6, element: null}] }, 
+        //             { value: 2, element: null, weights: [
+        //                 {value: .6, element: null}, 
+        //                 {value: .6, element: null}] }
+        //         ],
+        //         [
+        //             { value: 1, element: null, weights: [] }, 
+        //             { value: 2, element: null, weights: [
+        //                 {value: .6, element: null}, 
+        //                 {value: .6, element: null}, 
+        //                 {value: .6, element: null}] }, 
+        //             { value: 2, element: null, weights: [
+        //                 {value: .6, element: null}, 
+        //                 {value: .6, element: null}, 
+        //                 {value: .6, element: null}] }
+        //         ],
+        //         [
+        //             { value: 1, element: null, weights: [
+        //                 {value: .6, element: null}, 
+        //                 {value: .6, element: null}, 
+        //                 {value: .6, element: null}] }
+        //         ],
+        //     ]
+        // }
+
+
+        function httpGetAsync(theUrl, callback)
+        {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function() { 
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                    callback(xmlHttp.responseText);
+            }
+            xmlHttp.open('GET', theUrl, true); // true for asynchronous 
+            xmlHttp.send(null);
+        }
+        httpGetAsync('/get_nn', function(responseText){
+            test_nn = JSON.parse(responseText);
+            GenerateNN();
+        });
+
         var MAIN_DIV = document.getElementById('main');
 
-        var test_nn = {
-            neurons: [
-                [
-                    { value: 1, element: null, weights: [] }, 
-                    { value: 2, element: null, weights: [] }
-                ],
-                [
-                    { value: 1, element: null, weights: [] }, 
-                    { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}] }, 
-                    { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}] }
-                ],
-                [
-                    { value: 1, element: null, weights: [] }, 
-                    { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}] }, 
-                    { value: 2, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}] }
-                ],
-                [
-                    { value: 1, element: null, weights: [
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}, 
-                        {value: .6, element: null}] }
-                ],
-            ]
-        }
-
+        
         function GenerateNN() {
             var layers_count = test_nn.neurons.length;
             var biggest_layer_neurons_count = test_nn.neurons[0].length;
@@ -158,6 +175,10 @@
                     neuron.style.lineHeight = DATA.neuron_side+'px';
                     neuron.style.fontSize = DATA.neuron_side/3+'px';
                     neuron.style.textAlign = 'center';
+                    neuron.ChangeValue = function(new_value) {
+                        this.innerText = new_value;
+                        return this;
+                    }
                     if (j == 0) neuron.style.marginTop = (DATA.neurons_distance/2)+'px';
                     if (j == test_nn.neurons[i].length-1) neuron.style.marginBottom = (DATA.neurons_distance/2)+'px';
                     test_nn.neurons[i][j].element = neuron;
@@ -253,10 +274,10 @@
 
             var start_weight = document.createElement('div');
             start_weight.classList.add('circle_weight');
-            start_weight.innerHTML = value;
+            start_weight.innerHTML = Math.round(value * 100) / 100;
             var end_weight = document.createElement('div');
             end_weight.classList.add('circle_weight');
-            end_weight.innerHTML = value;
+            end_weight.innerHTML = Math.round(value * 100) / 100;;
 
             var start_weight_size = DATA.neuron_side / (test_nn.neurons[this_layer].length <= 1 ? 2 : test_nn.neurons[this_layer].length);
             start_weight.style.width = start_weight_size + 'px';
@@ -300,7 +321,7 @@
 
             var main_weight = document.createElement('div');
             main_weight.classList.add('main_weight');
-            main_weight.innerHTML = value;
+            main_weight.innerHTML = Math.round(value * 10000000) / 10000000;
             main_weight.style.height = DATA.weight_number_size + 'px';
             main_weight.style.lineHeight = (DATA.weight_number_size - DATA.weight_line_width) + 'px';
             main_weight.style.fontSize = (DATA.weight_number_size - DATA.weight_line_width) / 1.7 + 'px';
@@ -329,7 +350,7 @@
             return link;
         }
 
-        GenerateNN();
+        // GenerateNN();
 
         window.onmousemove = function(e) {
             if (e.buttons == 1) {

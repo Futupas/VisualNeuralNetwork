@@ -16,5 +16,6 @@ namespace VNN
     {
         public const string PATH_TO_DATA_FILE = @"D:\PROJECTS\VisualNeuralNetwork\VNN\VNN\data.json";
         public NN Network;
+        public FileModel DATA;
     }
 }

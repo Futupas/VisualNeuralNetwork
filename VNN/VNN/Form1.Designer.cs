@@ -79,6 +79,7 @@
             // 
             // btnSendMsgUsingWebsocket
             // 
+            this.btnSendMsgUsingWebsocket.Enabled = false;
             this.btnSendMsgUsingWebsocket.Location = new System.Drawing.Point(329, 10);
             this.btnSendMsgUsingWebsocket.Name = "btnSendMsgUsingWebsocket";
             this.btnSendMsgUsingWebsocket.Size = new System.Drawing.Size(28, 23);
@@ -89,6 +90,7 @@
             // 
             // tbMessageToWebsocket
             // 
+            this.tbMessageToWebsocket.Enabled = false;
             this.tbMessageToWebsocket.Location = new System.Drawing.Point(363, 12);
             this.tbMessageToWebsocket.Name = "tbMessageToWebsocket";
             this.tbMessageToWebsocket.Size = new System.Drawing.Size(285, 20);

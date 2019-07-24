@@ -1,3 +1,7 @@
 {
-
+  "website_prefixes": [ "http://192.168.0.111:2778/" ],
+  "nn_layer_count": 3,
+  "nn_neurons_count": 3,
+  "nn_inputs_count": 2,
+  "nn_learning_rate": 0.1
 }
