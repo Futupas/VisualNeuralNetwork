@@ -335,6 +335,15 @@
             link.appendChild(start_weight);
             link.appendChild(end_weight);
 
+            link.ChangeWeight = function (new_weight) {
+                var circle_weights = this.querySelectorAll('.circle_weight');
+                var main_weight = this.querySelector('.main_weight');
+                circle_weights[0].innerText = new_weight;
+                circle_weights[1].innerText = new_weight;
+                main_weight.innerText = new_weight;
+                return this;
+            }
+
             MAIN_DIV.appendChild(link);
 
             return link;
