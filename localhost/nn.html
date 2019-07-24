@@ -38,7 +38,7 @@
         }
         #main .link > .main_line{
             position: absolute;
-            height: 2px;
+            /* height: 2px; */
             border-radius: 1px;
             border: none;
             background-color: #000;
@@ -56,12 +56,12 @@
         #main .link .main_line .arrow {
             width: 0;
             height: 0;
-            border-top: 7px solid transparent;
+            /* border-top: 7px solid transparent;
             border-left: 15px solid black;
-            border-bottom: 7px solid transparent;
+            border-bottom: 7px solid transparent; */
             position: absolute;
-            right: 6px;
-            top: -6px;
+            /* right: 6px;
+            top: -6px; */
             z-index: 30;
         }
         #main .link .main_line .main_weight{
@@ -83,10 +83,6 @@
             display: inline-block;
             z-index: 50;
         }
-        /* #main .link .main_line:hover .main_weight{
-            display: inline-block;
-            z-index: 1000000;
-        } */
     </style>
 </head>
 <body>
@@ -114,11 +110,11 @@
 
     <script>
         var DATA = {
-            neurons_distance: 100,
-            layers_distance: 150,
-            neuron_side: 50,
-            neuron_border: 2,
-            weight_line_width: 5
+            neurons_distance: 300,
+            layers_distance: 400,
+            neuron_side: 200,
+            neuron_border: 5,
+            weight_line_width: 10
         }
         var MAIN_DIV = document.getElementById('main');
 
@@ -263,6 +259,7 @@
             link.classList.add('link');
             var main_line = document.createElement('div');
             main_line.classList.add('main_line');
+            main_line.style.height = DATA.weight_line_width + 'px';
 
             link.style.width = DATA.layers_distance + 'px';
             var from_top = test_nn.neurons[this_layer-1][from_neuron].element.offsetTop;
@@ -281,9 +278,6 @@
             var end_weight = document.createElement('div');
             end_weight.classList.add('circle_weight');
             end_weight.innerHTML = value;
-            
-            var arrow = document.createElement('div');
-            arrow.classList.add('arrow');
 
             var start_weight_size = DATA.neuron_side / (test_nn.neurons[this_layer].length <= 1 ? 2 : test_nn.neurons[this_layer].length);
             start_weight.style.width = start_weight_size + 'px';
@@ -300,6 +294,13 @@
             end_weight.style.borderRadius = end_weight_size / 2 + 'px';
             end_weight.style.right = end_weight_size / -2 + 'px';
 
+            var arrow = document.createElement('div');
+            arrow.classList.add('arrow');
+            arrow.style.top = DATA.weight_line_width * -1.5 + 'px';
+            arrow.style.right = end_weight_size/2.5 + 'px';
+            arrow.style.borderTop = DATA.weight_line_width*2 + 'px solid transparent';
+            arrow.style.borderLeft = DATA.weight_line_width*5 + 'px solid black';
+            arrow.style.borderBottom = DATA.weight_line_width*2 + 'px solid transparent';
 
             var length = Math.sqrt(Math.pow(from_top - to_top, 2) + Math.pow(DATA.layers_distance, 2));
             main_line.style.width = length + 'px';
