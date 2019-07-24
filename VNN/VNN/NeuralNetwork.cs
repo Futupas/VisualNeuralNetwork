@@ -48,10 +48,10 @@ namespace VNN
         }
         public double GetResult(double[] inputs)
         {
-            Network[0][0].Value = 1;
-            for (int i = 1; i < Network[0].Length; i++)
+            //Network[0][0].Value = 1;
+            for (int i = 0; i < Network[0].Length; i++)
             {
-                Network[0][i].Value = inputs[i - 1];
+                Network[0][i].Value = inputs[i];
             }
             for (int i = 1; i < Network.Length; i++)
             {

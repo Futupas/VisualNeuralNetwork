@@ -25,5 +25,5 @@
       "output": 1.0
     }
   ],
-  "nn_sleep_between_learning": 1000
+  "nn_sleep_between_learning": 0
 }
