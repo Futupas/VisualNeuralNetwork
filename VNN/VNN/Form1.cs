@@ -22,10 +22,6 @@ namespace VNN
             website_started = false;
         }
 
-        public const string PATH_TO_DATA_FILE = @"D:\PROJECTS\VisualNeuralNetwork\VNN\VNN\data.json";
-
-        PanWebsite Website;
-        private bool website_started;
         private void Form1_Load(object sender, EventArgs e)
         {
             //
@@ -45,14 +41,6 @@ namespace VNN
             }
         }
 
-        public PanResponse WebsiteLife(PanRequest request)
-        {
-            if(File.Exists("index.html"))
-            return PanResponse.ReturnHtml("index.html");
-            else
-                return PanResponse.ReturnHtml(@"D:\PROJECTS\VisualNeuralNetwork\localhost\index.html");
-        }
-
         private void BtnStopWebsite_Click(object sender, EventArgs e)
         {
             if (website_started)
@@ -66,17 +54,10 @@ namespace VNN
                 MessageBox.Show("Website is already stopped!");
             }
         }
-        public void OnWebSocketMessage(WebSocket ws, string message)
-        { 
-            Invoke(new Action(() =>
-            {
-                console1.AppendText($"->{message}\n");
-            }));
-        }
 
         private void BtnOpenHtml_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://localhost:2778");
+            System.Diagnostics.Process.Start("http://192.168.0.111:2778");
         }
 
         private void BtnSendMsgUsingWebsocket_Click(object sender, EventArgs e)
@@ -90,7 +71,7 @@ namespace VNN
         {
             openFileDialog1.ShowDialog();
             string fpath = openFileDialog1.FileName;
-            NN n = new NN(4, 3, 2, .1);
+            Network = new NN(4, 3, 2, .1);
             MessageBox.Show(fpath);
         }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VNN
 {
-    class NN
+    public class NN
     {
         public Neuron[][] Network;
         public Random random = new Random();
@@ -160,7 +160,7 @@ namespace VNN
 
     }
 
-    class Neuron
+    public class Neuron
     {
         public double[] Weights; //input 
         public double Value;
