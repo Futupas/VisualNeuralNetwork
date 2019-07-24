@@ -66,6 +66,7 @@
             display: none;
             z-index: 40;
             box-sizing: border-box;
+            transform: translateX(-50%);
         }
         #main .link .main_line .main_weight.visible{
             display: inline-block;
@@ -85,15 +86,16 @@
         //     layers_distance: 400,
         //     neuron_side: 200,
         //     neuron_border: 5,
-        //     weight_line_width: 10
+        //     weight_line_width: 10,
+        //     weight_number_size: 50
         // }
         var DATA = {
             neurons_distance: 100,
-            layers_distance: 150,
+            layers_distance: 200,
             neuron_side: 50,
             neuron_border: 2,
             weight_line_width: 2,
-            weight_number_size: 10
+            weight_number_size: 50
         }
         var MAIN_DIV = document.getElementById('main');
 
@@ -303,18 +305,9 @@
             main_weight.style.lineHeight = (DATA.weight_number_size - DATA.weight_line_width) + 'px';
             main_weight.style.fontSize = (DATA.weight_number_size - DATA.weight_line_width) / 1.7 + 'px';
             main_weight.style.top = (DATA.weight_number_size / -2) + (DATA.weight_line_width * .25) + 'px';
-            main_weight.style.borderRadius = DATA.weight_line_width * 2.5 + 'px';
+            main_weight.style.borderRadius = DATA.weight_number_size * .5 + 'px';
             main_weight.style.border = DATA.weight_line_width * .5 + 'px solid black';
             main_weight.style.padding = '0px '+DATA.weight_number_size*.4+'px';
-            main_weight.style.transform = 'translateX(' + (DATA.weight_line_width*-5) +'px)';
-            // main_weight.style.height = DATA.weight_line_width * 5 + 'px';
-            // main_weight.style.lineHeight = (DATA.weight_line_width * 5 - (DATA.weight_line_width)) + 'px';
-            // main_weight.style.fontSize = DATA.weight_line_width * 2.5 + 'px';
-            // main_weight.style.top = DATA.weight_line_width * -2 + 'px';
-            // main_weight.style.borderRadius = DATA.weight_line_width * 2.5 + 'px';
-            // main_weight.style.border = DATA.weight_line_width * .5 + 'px solid black';
-            // main_weight.style.padding = '0px '+DATA.weight_line_width * 2+'px';
-            // main_weight.style.transform = 'translateX(' + (DATA.weight_line_width*-5) +'px)';
 
             main_line.appendChild(arrow);
             main_line.appendChild(main_weight);
