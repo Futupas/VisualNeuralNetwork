@@ -36,6 +36,7 @@
             this.tbMessageToWebsocket = new System.Windows.Forms.TextBox();
             this.btnSelectFile = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.btn_StartLearning = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnStartWebsite
@@ -98,9 +99,9 @@
             // 
             // btnSelectFile
             // 
-            this.btnSelectFile.Location = new System.Drawing.Point(40, 195);
+            this.btnSelectFile.Location = new System.Drawing.Point(12, 196);
             this.btnSelectFile.Name = "btnSelectFile";
-            this.btnSelectFile.Size = new System.Drawing.Size(167, 23);
+            this.btnSelectFile.Size = new System.Drawing.Size(239, 23);
             this.btnSelectFile.TabIndex = 6;
             this.btnSelectFile.Text = "Select file with NN\'s data";
             this.btnSelectFile.UseVisualStyleBackColor = true;
@@ -110,11 +111,22 @@
             // 
             this.openFileDialog1.Filter = "JSON files|*.json|All files|*.*";
             // 
+            // btn_StartLearning
+            // 
+            this.btn_StartLearning.Location = new System.Drawing.Point(12, 225);
+            this.btn_StartLearning.Name = "btn_StartLearning";
+            this.btn_StartLearning.Size = new System.Drawing.Size(239, 23);
+            this.btn_StartLearning.TabIndex = 7;
+            this.btn_StartLearning.Text = "Start learning";
+            this.btn_StartLearning.UseVisualStyleBackColor = true;
+            this.btn_StartLearning.Click += new System.EventHandler(this.Btn_StartLearning_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(660, 589);
+            this.Controls.Add(this.btn_StartLearning);
             this.Controls.Add(this.btnSelectFile);
             this.Controls.Add(this.tbMessageToWebsocket);
             this.Controls.Add(this.btnSendMsgUsingWebsocket);
@@ -140,6 +152,7 @@
         private System.Windows.Forms.TextBox tbMessageToWebsocket;
         private System.Windows.Forms.Button btnSelectFile;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button btn_StartLearning;
     }
 }
 

@@ -174,12 +174,12 @@
                     neuron.style.width = DATA.neuron_side+'px';
                     neuron.style.height = DATA.neuron_side+'px';
                     neuron.style.border = DATA.neuron_border+'px solid black';
-                    neuron.innerText = test_nn.neurons[i][j].value;
+                    neuron.innerText = Math.round(test_nn.neurons[i][j].value * 100) / 100;
                     neuron.style.lineHeight = DATA.neuron_side+'px';
                     neuron.style.fontSize = DATA.neuron_side/3+'px';
                     neuron.style.textAlign = 'center';
                     neuron.ChangeValue = function(new_value) {
-                        this.innerText = new_value;
+                        this.innerText = Math.round(new_value * 100) / 100;
                         return this;
                     }
                     if (j == 0) neuron.style.marginTop = (DATA.neurons_distance/2)+'px';
@@ -342,9 +342,9 @@
             link.ChangeWeight = function (new_weight) {
                 var circle_weights = this.querySelectorAll('.circle_weight');
                 var main_weight = this.querySelector('.main_weight');
-                circle_weights[0].innerText = new_weight;
-                circle_weights[1].innerText = new_weight;
-                main_weight.innerText = new_weight;
+                circle_weights[0].innerText = Math.round(new_weight * 100) / 100;
+                circle_weights[1].innerText = Math.round(new_weight * 100) / 100;
+                main_weight.innerText = Math.round(new_weight * 10000000) / 10000000;
                 return this;
             }
 
@@ -363,6 +363,34 @@
             }
         }
 
+
+
+        socket = new WebSocket('ws://'+window.location.host+'/');
+        socket.onopen = function(evt) { 
+                console.log('websocket open'); 
+                console.log(evt); 
+            };
+        socket.onclose = function(evt) { 
+                console.log('websocket close'); 
+                console.log(evt); 
+            };
+        socket.onmessage = function(evt) { 
+                console.log('websocket message'); 
+                console.log(evt);
+                var new_data = JSON.parse(evt.data);
+                for (var i_l = 0; i_l < test_nn.neurons.length; i_l++) {
+                    for (var i_n = 0; i_n < test_nn.neurons[i_l].length; i_n++) {
+                        test_nn.neurons[i_l][i_n].element.ChangeValue(new_data.neurons[i_l][i_n].value);
+                        for (var i_w = 0; i_w < test_nn.neurons[i_l][i_n].weights.length; i_w++) {
+                            test_nn.neurons[i_l][i_n].weights[i_w].element.ChangeWeight(new_data.neurons[i_l][i_n].weights[i_w].value);
+                        }
+                    }
+                }
+            };
+        socket.onerror = function(evt) { 
+                console.log('websocket error'); 
+                console.log(evt); 
+            };
     </script>
 </body>
 </html>

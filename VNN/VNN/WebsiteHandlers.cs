@@ -25,12 +25,6 @@ namespace VNN
                     case "get_nn":
                         return PanResponse.ReturnJson(new NNWebModel(Network));
                         break;
-                    case "nn":
-                        if (File.Exists("nn.html"))
-                            return PanResponse.ReturnHtml("nn.html");
-                        else
-                            return PanResponse.ReturnHtml(@"D:\PROJECTS\VisualNeuralNetwork\localhost\nn.html");
-                        break;
                     case "get_data":
                         object data = new
                         {
@@ -48,10 +42,11 @@ namespace VNN
                 }
 
             }
-            if (File.Exists("index.html"))
-                return PanResponse.ReturnHtml("index.html");
+
+            if (File.Exists(DATA.data_main_html_file))
+                return PanResponse.ReturnHtml(DATA.data_main_html_file);
             else
-                return PanResponse.ReturnHtml(@"D:\PROJECTS\VisualNeuralNetwork\localhost\index.html");
+                return PanResponse.ReturnCode(404);
         }
 
         public void OnWebSocketMessage(WebSocket ws, string message)

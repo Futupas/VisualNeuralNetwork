@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.WebSockets;
@@ -56,7 +57,7 @@ namespace VNN
 
         private void BtnOpenHtml_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start(DATA.website_prefixes[0]+"/nn");
+            System.Diagnostics.Process.Start(DATA.website_prefixes[0]);
             //System.Diagnostics.Process.Start("http://192.168.0.111:2778");
         }
 
@@ -79,6 +80,24 @@ namespace VNN
             //Network = new NN(4, 3, 2, .1);
             //Website = new PanWebsite("http://192.168.0.111:2778/", WebsiteLife);
             Website.onWebSocketMessage = OnWebSocketMessage;
+        }
+
+        private void Btn_StartLearning_Click(object sender, EventArgs e)
+        {
+            Task.Factory.StartNew(() => {
+                while (true)
+                {
+                    foreach (var learning_data in DATA.nn_learning_data)
+                    {
+                        Network.Teach(learning_data.inputs, learning_data.output);
+                        Website.WebSocketSend(JsonConvert.SerializeObject(new NNWebModel(Network)));
+                        if (DATA.nn_sleep_between_learning > 0)
+                        {
+                            Thread.Sleep((int)DATA.nn_sleep_between_learning);
+                        }
+                    }
+                }
+            });
         }
     }
 }

@@ -42,6 +42,7 @@ namespace VNN
 
     public class FileModel
     {
+        public string data_main_html_file;
         public string[] website_prefixes;
 
         public uint nn_layer_count; //only hidden
@@ -56,5 +57,12 @@ namespace VNN
         public uint ws_weight_line_width;
         public uint ws_weight_number_size;
 
+        public FileModel_NN_Learning_Kit[] nn_learning_data;
+        public uint nn_sleep_between_learning;
+    }
+    public class FileModel_NN_Learning_Kit
+    {
+        public double output;
+        public double[] inputs;
     }
 }
