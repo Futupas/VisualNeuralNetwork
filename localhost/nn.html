@@ -81,22 +81,22 @@
     </div>
 
     <script>
-        // var DATA = {
-        //     neurons_distance: 300,
-        //     layers_distance: 400,
-        //     neuron_side: 200,
-        //     neuron_border: 5,
-        //     weight_line_width: 10,
-        //     weight_number_size: 50
-        // }
         var DATA = {
-            neurons_distance: 100,
-            layers_distance: 200,
-            neuron_side: 50,
-            neuron_border: 2,
-            weight_line_width: 2,
+            neurons_distance: 300,
+            layers_distance: 400,
+            neuron_side: 200,
+            neuron_border: 5,
+            weight_line_width: 10,
             weight_number_size: 50
         }
+        // var DATA = {
+        //     neurons_distance: 100,
+        //     layers_distance: 200,
+        //     neuron_side: 50,
+        //     neuron_border: 2,
+        //     weight_line_width: 2,
+        //     weight_number_size: 50
+        // }
         var MAIN_DIV = document.getElementById('main');
 
         var test_nn = {
@@ -330,6 +330,14 @@
         }
 
         GenerateNN();
+
+        window.onmousemove = function(e) {
+            if (e.buttons == 1) {
+                document.documentElement.scrollTo(
+                    document.documentElement.scrollLeft - e.movementX, 
+                    document.documentElement.scrollTop - e.movementY);
+            }
+        }
 
     </script>
 </body>
