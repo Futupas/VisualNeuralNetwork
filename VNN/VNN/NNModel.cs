@@ -43,9 +43,18 @@ namespace VNN
     public class FileModel
     {
         public string[] website_prefixes;
+
         public uint nn_layer_count; //only hidden
         public uint nn_neurons_count; //per hidden layer, with bias
         public uint nn_inputs_count;
         public double nn_learning_rate;
+
+        public uint ws_neurons_distance;
+        public uint ws_layers_distance;
+        public uint ws_neuron_side;
+        public uint ws_neuron_border;
+        public uint ws_weight_line_width;
+        public uint ws_weight_number_size;
+
     }
 }

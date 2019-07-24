@@ -1,7 +1,15 @@
 {
   "website_prefixes": [ "http://192.168.0.111:2778/" ],
+
   "nn_layer_count": 3,
   "nn_neurons_count": 3,
   "nn_inputs_count": 2,
-  "nn_learning_rate": 0.1
+  "nn_learning_rate": 0.1,
+
+  "ws_neurons_distance": 300,
+  "ws_layers_distance": 400,
+  "ws_neuron_side": 200,
+  "ws_neuron_border": 5,
+  "ws_weight_line_width": 10,
+  "ws_weight_number_size": 50
 }

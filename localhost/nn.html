@@ -143,6 +143,9 @@
             xmlHttp.open('GET', theUrl, true); // true for asynchronous 
             xmlHttp.send(null);
         }
+        httpGetAsync('/get_data', function(responseText){
+            DATA = JSON.parse(responseText);
+        });
         httpGetAsync('/get_nn', function(responseText){
             test_nn = JSON.parse(responseText);
             GenerateNN();

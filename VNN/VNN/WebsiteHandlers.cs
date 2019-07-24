@@ -31,6 +31,18 @@ namespace VNN
                         else
                             return PanResponse.ReturnHtml(@"D:\PROJECTS\VisualNeuralNetwork\localhost\nn.html");
                         break;
+                    case "get_data":
+                        object data = new
+                        {
+                            neurons_distance = DATA.ws_neurons_distance,
+                            layers_distance = DATA.ws_layers_distance,
+                            neuron_side = DATA.ws_neuron_side,
+                            neuron_border = DATA.ws_neuron_border,
+                            weight_line_width = DATA.ws_weight_line_width,
+                            weight_number_size = DATA.ws_weight_number_size
+                        };
+                        return PanResponse.ReturnJson(data);
+                        break;
                     default:
                         break;
                 }
