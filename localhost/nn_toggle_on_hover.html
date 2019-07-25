@@ -190,76 +190,59 @@
                         layer: i,
                         neuron: j
                     };
-                    neuron.opened = false;
-                    neuron.onclick = function (e) {
-                        this.opened = !this.opened;
-                        if (this.opened) {
-                            var all_main_weights = MAIN_DIV.querySelectorAll('.main_weight');
-                            var all_links = MAIN_DIV.querySelectorAll('.link');
-                            var all_neurons = MAIN_DIV.querySelectorAll('.neuron');
-                            for (var i = 0; i < all_main_weights.length; i++) {
-                                all_main_weights[i].classList.remove('visible');
-                            }
-                            for (var i = 0; i < all_links.length; i++) {
-                                all_links[i].classList.remove('invisible');
-                            }
-                            for (var i = 0; i < all_neurons.length; i++) {
-                                all_neurons[i].opened = false;
-                            }
-                            this.opened = true;
-
-                            var current_layer = this.data.layer;
-                            var current_neuron = this.data.neuron;
-                            //all neurons of current layer
-                            for (var _i = 0; _i < test_nn.neurons[current_layer].length; _i++) {
-                                if (_i == current_neuron) {
-                                    for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
-                                        test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.add('visible');
-                                    }
-                                    continue;
-                                };
+                    neuron.onmouseenter = function(e) {
+                        var current_layer = this.data.layer;
+                        var current_neuron = this.data.neuron;
+                        //all neurons of current layer
+                        for (var _i = 0; _i < test_nn.neurons[current_layer].length; _i++) {
+                            if (_i == current_neuron) {
                                 for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
-                                    test_nn.neurons[current_layer][_i].weights[_j].element.classList.add('invisible');
+                                    test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.add('visible');
                                 }
-                            }
-                            //all neurons of next layer
-                            for (var _i = 0; _i < test_nn.neurons[current_layer+1].length; _i++) {
-                                for(var _j = 0; _j < test_nn.neurons[current_layer+1][_i].weights.length; _j++) {
-                                    if (_j == current_neuron) {
-                                        test_nn.neurons[current_layer+1][_i].weights[_j].element.querySelector('.main_weight').classList.add('visible');
-                                        continue;
-                                    }
-                                    test_nn.neurons[current_layer+1][_i].weights[_j].element.classList.add('invisible');
-                                }
-                            }
-                        } else {
-                            var current_layer = this.data.layer;
-                            var current_neuron = this.data.neuron;
-                            //all neurons of current layer
-                            for (var _i = 0; _i < test_nn.neurons[current_layer].length; _i++) {
-                                if (_i == current_neuron) {
-                                    for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
-                                        test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.remove('visible');
-                                    }
-                                    continue;
-                                };
-                                for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
-                                    test_nn.neurons[current_layer][_i].weights[_j].element.classList.remove('invisible');
-                                }
-                            }
-                            //all neurons of next layer
-                            for (var _i = 0; _i < test_nn.neurons[current_layer+1].length; _i++) {
-                                for(var _j = 0; _j < test_nn.neurons[current_layer+1][_i].weights.length; _j++) {
-                                    if (_j == current_neuron) {
-                                        test_nn.neurons[current_layer+1][_i].weights[_j].element.querySelector('.main_weight').classList.remove('visible');
-                                        continue;
-                                    }
-                                    test_nn.neurons[current_layer+1][_i].weights[_j].element.classList.remove('invisible');
-                                }
+                                continue;
+                            };
+                            for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
+                                test_nn.neurons[current_layer][_i].weights[_j].element.classList.add('invisible');
                             }
                         }
-                    }
-                    
+                        //all neurons of next layer
+                        for (var _i = 0; _i < test_nn.neurons[current_layer+1].length; _i++) {
+                            for(var _j = 0; _j < test_nn.neurons[current_layer+1][_i].weights.length; _j++) {
+                                if (_j == current_neuron) {
+                                    test_nn.neurons[current_layer+1][_i].weights[_j].element.querySelector('.main_weight').classList.add('visible');
+                                    continue;
+                                }
+                                test_nn.neurons[current_layer+1][_i].weights[_j].element.classList.add('invisible');
+                            }
+                        }
+                    };
+                    neuron.onmouseleave = function(e) {
+                        var current_layer = this.data.layer;
+                        var current_neuron = this.data.neuron;
+                        //all neurons of current layer
+                        for (var _i = 0; _i < test_nn.neurons[current_layer].length; _i++) {
+                            if (_i == current_neuron) {
+                                for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
+                                    test_nn.neurons[current_layer][_i].weights[_j].element.querySelector('.main_weight').classList.remove('visible');
+                                }
+                                continue;
+                            };
+                            for(var _j = 0; _j < test_nn.neurons[current_layer][_i].weights.length; _j++) {
+                                test_nn.neurons[current_layer][_i].weights[_j].element.classList.remove('invisible');
+                            }
+                        }
+                        //all neurons of next layer
+                        for (var _i = 0; _i < test_nn.neurons[current_layer+1].length; _i++) {
+                            for(var _j = 0; _j < test_nn.neurons[current_layer+1][_i].weights.length; _j++) {
+                                if (_j == current_neuron) {
+                                    test_nn.neurons[current_layer+1][_i].weights[_j].element.querySelector('.main_weight').classList.remove('visible');
+                                    continue;
+                                }
+                                test_nn.neurons[current_layer+1][_i].weights[_j].element.classList.remove('invisible');
+                            }
+                        }
+                    };
+
                     layer.appendChild(neuron);
                 }
                 MAIN_DIV.appendChild(layer);
