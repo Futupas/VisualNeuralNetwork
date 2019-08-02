@@ -59,6 +59,8 @@ namespace VNN
 
         public FileModel_NN_Learning_Kit[] nn_learning_data;
         public uint nn_sleep_between_learning;
+
+        public List<string[]> data_real_url_pathes = new List<string[]>();
     }
     public class FileModel_NN_Learning_Kit
     {

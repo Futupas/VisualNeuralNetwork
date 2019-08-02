@@ -1,0 +1,101 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+#main_container{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    width: 75vw;
+    height: 100vh;
+    overflow: auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+#main{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    transform: scale(1);
+    transform-origin: top left;
+}
+#main > .layer{
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    z-index: 10;
+}
+#main > .layer > .neuron{
+    display: block;
+    box-sizing: border-box;
+}
+#main .link{
+    position: absolute;
+    /* z-index: 0; */
+    display: block;
+}
+#main .link.invisible{
+    position: absolute;
+    display: none;
+}
+#main .link > .main_line{
+    position: absolute;
+    border-radius: 1px;
+    border: none;
+    background-color: #000;
+    transform-origin: center left;
+    text-align: center;
+    z-index: 30;
+}
+#main .link .circle_weight{
+    position: absolute;
+    background-color: #fff;
+    text-align: center;
+    z-index: 40;
+    box-sizing: border-box;
+}
+#main .link .main_line .arrow {
+    width: 0;
+    height: 0;
+    position: absolute;
+    z-index: 30;
+}
+#main .link .main_line .main_weight{
+    position: absolute;
+    border: 1px solid black;
+    background-color: #fff;
+    text-align: center;
+    display: none;
+    z-index: 40;
+    box-sizing: border-box;
+    transform: translateX(-50%);
+}
+#main .link .main_line .main_weight.visible{
+    display: inline-block;
+    z-index: 50;
+}
+
+#neuron_data{
+    position: fixed;
+    top: 0px;
+    left: 75vw;
+    z-index: 1;
+    width: 25vw;
+    height: 50vh;
+    overflow: auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
+#network_data{
+    position: fixed;
+    top: 50vh;
+    left: 75vw;
+    z-index: 1;
+    width: 25vw;
+    height: 50vh;
+    overflow: auto;
+    padding: 10px;
+    box-sizing: border-box;
+}
