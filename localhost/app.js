@@ -1,53 +1,12 @@
-var DATA = {
-    neurons_distance: 300,
-    layers_distance: 400,
-    neuron_side: 200,
-    neuron_border: 5,
-    weight_line_width: 10,
-    weight_number_size: 50
-}
-// var DATA = {
-//     neurons_distance: 100,
-//     layers_distance: 200,
-//     neuron_side: 50,
-//     neuron_border: 2,
-//     weight_line_width: 2,
+var DATA; // = {
+//     neurons_distance: 300,
+//     layers_distance: 400,
+//     neuron_side: 200,
+//     neuron_border: 5,
+//     weight_line_width: 10,
 //     weight_number_size: 50
 // }
- var test_nn;// = {
-//     neurons: [
-//         [
-//             { value: 1, element: null, weights: [] }, 
-//             { value: 2, element: null, weights: [] }
-//         ],
-//         [
-//             { value: 1, element: null, weights: [] }, 
-//             { value: 2, element: null, weights: [
-//                 {value: .6, element: null}, 
-//                 {value: .6, element: null}] }, 
-//             { value: 2, element: null, weights: [
-//                 {value: .6, element: null}, 
-//                 {value: .6, element: null}] }
-//         ],
-//         [
-//             { value: 1, element: null, weights: [] }, 
-//             { value: 2, element: null, weights: [
-//                 {value: .6, element: null}, 
-//                 {value: .6, element: null}, 
-//                 {value: .6, element: null}] }, 
-//             { value: 2, element: null, weights: [
-//                 {value: .6, element: null}, 
-//                 {value: .6, element: null}, 
-//                 {value: .6, element: null}] }
-//         ],
-//         [
-//             { value: 1, element: null, weights: [
-//                 {value: .6, element: null}, 
-//                 {value: .6, element: null}, 
-//                 {value: .6, element: null}] }
-//         ],
-//     ]
-// }
+ var test_nn;
 
 
 function httpGetAsync(theUrl, callback)
@@ -309,8 +268,8 @@ socket.onclose = function(evt) {
         console.log(evt); 
     };
 socket.onmessage = function(evt) { 
-        console.log('websocket message'); 
-        console.log(evt);
+        // console.log('websocket message'); 
+        // console.log(evt);
         var new_data = JSON.parse(evt.data);
         UpdateNN(new_data);
     };
@@ -346,13 +305,18 @@ function UpdateNN(new_data) {
 
 
 document.getElementById('btn_start_learning').onclick = function (e) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open('GET', '/nn_start_learning', true); // true for asynchronous 
-    xmlHttp.send(null);
+    // var xmlHttp = new XMLHttpRequest();
+    // xmlHttp.open('GET', '/nn_start_learning', true); // true for asynchronous 
+    // xmlHttp.send(null);
+    httpGetAsync('/nn_start_learning', function(responseText){
+        var new_data = JSON.parse(responseText);
+        UpdateNN(new_data);
+    });
 }
 document.getElementById('btn_stop_learning').onclick = function (e) {
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open('GET', '/nn_stop_learning', true); // true for asynchronous 
-    xmlHttp.send(null);
+    httpGetAsync('/nn_stop_learning', function(responseText){
+        var new_data = JSON.parse(responseText);
+        UpdateNN(new_data);
+    });
 }
 

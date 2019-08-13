@@ -72,16 +72,29 @@ namespace VNN
         {
             openFileDialog1.ShowDialog();
             string fpath = openFileDialog1.FileName;
-            //MessageBox.Show(fpath);
             string json_data = File.ReadAllText(fpath);
             DATA = JsonConvert.DeserializeObject<FileModel>(json_data);
             Network = new NN((int)DATA.nn_layer_count, (int)DATA.nn_neurons_count, (int)DATA.nn_inputs_count, DATA.nn_learning_rate);
+
+            if (website_started)
+            {
+                try
+                {
+                    Website.Stop();
+                }
+                finally
+                {
+                    this.website_started = false;
+                    console1.AppendText("website is stopped\n");
+                }
+            }
+                
             Website = new PanWebsite(DATA.website_prefixes, WebsiteLife);
-            //Network = new NN(4, 3, 2, .1);
-            //Website = new PanWebsite("http://192.168.0.111:2778/", WebsiteLife);
             Website.onWebSocketMessage = OnWebSocketMessage;
 
-            Task.Factory.StartNew(() => {
+            //learning_task
+            //learning_task.Dispose();
+            learning_task = new Task(() => {
                 while (true)
                 {
                     if (this.is_learning)
@@ -99,24 +112,9 @@ namespace VNN
                     
                 }
             });
+            learning_task.Start();
         }
 
-        private void Btn_StartLearning_Click(object sender, EventArgs e)
-        {
-            Task.Factory.StartNew(() => {
-                while (true)
-                {
-                    foreach (var learning_data in DATA.nn_learning_data)
-                    {
-                        Network.Teach(learning_data.inputs, learning_data.output);
-                        Website.WebSocketSend(JsonConvert.SerializeObject(new NNWebModel(Network, this)));
-                        if (DATA.nn_sleep_between_learning > 0)
-                        {
-                            Thread.Sleep((int)DATA.nn_sleep_between_learning);
-                        }
-                    }
-                }
-            });
-        }
+        
     }
 }

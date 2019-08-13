@@ -18,5 +18,8 @@ namespace VNN
         public NN Network;
         public FileModel DATA;
         public bool is_learning;
+        public Task learning_task;
+        PanWebsite Website;
+        private bool website_started;
     }
 }

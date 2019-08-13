@@ -14,8 +14,6 @@ namespace VNN
 {
     public partial class Form1 : Form
     {
-        PanWebsite Website;
-        private bool website_started;
         public PanResponse WebsiteLife(PanRequest request)
         {
             if (request.Address.Length >= 1)
@@ -69,6 +67,7 @@ namespace VNN
                                 return PanResponse.ReturnCode(500, $"Incorrect inputs. Details:\nMessage:{ex.Message}\nStactTrace:{ex.StackTrace}\nStringException:{ex.ToString()}");
                             }
                         }
+                    case "get_result":
                     case "get_result_number":
                         if (this.is_learning)
                         {
