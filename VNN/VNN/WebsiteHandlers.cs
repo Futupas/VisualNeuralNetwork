@@ -23,7 +23,15 @@ namespace VNN
                 switch (request.Address[0])
                 {
                     case "get_nn":
-                        return PanResponse.ReturnJson(new NNWebModel(Network));
+                        return PanResponse.ReturnJson(new NNWebModel(Network, this));
+                        break;
+                    case "nn_start_learning":
+                        this.is_learning = true;
+                        return PanResponse.ReturnJson(new NNWebModel(Network, this));
+                        break;
+                    case "nn_stop_learning":
+                        this.is_learning = false;
+                        return PanResponse.ReturnJson(new NNWebModel(Network, this));
                         break;
                     case "get_data":
                         object data = new
@@ -36,6 +44,55 @@ namespace VNN
                             weight_number_size = DATA.ws_weight_number_size
                         };
                         return PanResponse.ReturnJson(data);
+                        break;
+                    case "get_result_nn":
+                        if (this.is_learning)
+                        {
+                            return PanResponse.ReturnCode(500, "Neural network is learning. Stop learning to get result.");
+                        }
+                        else
+                        {
+                            try
+                            {
+                                string input_string = request.Data["inputs"];
+                                string[] s_inputs = input_string.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                                double[] inputs = new double[s_inputs.Length];
+                                for (int i = 0; i < s_inputs.Length; i++)
+                                {
+                                    inputs[i] = double.Parse(s_inputs[i]);
+                                }
+                                double result = Network.GetResult(inputs);
+                                return PanResponse.ReturnJson(new NNWebModel(Network, this));
+                            }
+                            catch(Exception ex)
+                            {
+                                return PanResponse.ReturnCode(500, $"Incorrect inputs. Details:\nMessage:{ex.Message}\nStactTrace:{ex.StackTrace}\nStringException:{ex.ToString()}");
+                            }
+                        }
+                    case "get_result_number":
+                        if (this.is_learning)
+                        {
+                            return PanResponse.ReturnCode(500, "Neural network is learning. Stop learning to get result.");
+                        }
+                        else
+                        {
+                            try
+                            {
+                                string input_string = request.Data["inputs"];
+                                string[] s_inputs = input_string.Split(new string[] { ";" }, StringSplitOptions.RemoveEmptyEntries);
+                                double[] inputs = new double[s_inputs.Length];
+                                for (int i = 0; i < s_inputs.Length; i++)
+                                {
+                                    inputs[i] = double.Parse(s_inputs[i]);
+                                }
+                                double result = Network.GetResult(inputs);
+                                return PanResponse.ReturnContent(result.ToString());
+                            }
+                            catch (Exception ex)
+                            {
+                                return PanResponse.ReturnCode(500, $"Incorrect inputs. Details:\nMessage:{ex.Message}\nStactTrace:{ex.StackTrace}\nStringException:{ex.ToString()}");
+                            }
+                        }
                         break;
                     default:
                         string request_path_segment = request.Address[0];

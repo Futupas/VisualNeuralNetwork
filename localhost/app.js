@@ -312,16 +312,47 @@ socket.onmessage = function(evt) {
         console.log('websocket message'); 
         console.log(evt);
         var new_data = JSON.parse(evt.data);
-        for (var i_l = 0; i_l < test_nn.neurons.length; i_l++) {
-            for (var i_n = 0; i_n < test_nn.neurons[i_l].length; i_n++) {
-                test_nn.neurons[i_l][i_n].element.ChangeValue(new_data.neurons[i_l][i_n].value);
-                for (var i_w = 0; i_w < test_nn.neurons[i_l][i_n].weights.length; i_w++) {
-                    test_nn.neurons[i_l][i_n].weights[i_w].element.ChangeWeight(new_data.neurons[i_l][i_n].weights[i_w].value);
-                }
-            }
-        }
+        UpdateNN(new_data);
     };
 socket.onerror = function(evt) { 
         console.log('websocket error'); 
         console.log(evt); 
     };
+
+
+
+    
+function UpdateNN(new_data) {
+    for (var i_l = 0; i_l < test_nn.neurons.length; i_l++) {
+        for (var i_n = 0; i_n < test_nn.neurons[i_l].length; i_n++) {
+            test_nn.neurons[i_l][i_n].element.ChangeValue(new_data.neurons[i_l][i_n].value);
+            for (var i_w = 0; i_w < test_nn.neurons[i_l][i_n].weights.length; i_w++) {
+                test_nn.neurons[i_l][i_n].weights[i_w].element.ChangeWeight(new_data.neurons[i_l][i_n].weights[i_w].value);
+            }
+        }
+    }
+
+    if (new_data.is_learning === true) {
+        document.getElementById('btn_start_learning').style.cursor = 'not-allowed';
+        document.getElementById('btn_stop_learning').style.cursor = 'auto';
+    } else if (new_data.is_learning === false) {
+        document.getElementById('btn_start_learning').style.cursor = 'auto';
+        document.getElementById('btn_stop_learning').style.cursor = 'not-allowed';
+    } else {
+        document.getElementById('btn_start_learning').style.cursor = 'auto';
+        document.getElementById('btn_stop_learning').style.cursor = 'auto';
+    }
+}
+
+
+document.getElementById('btn_start_learning').onclick = function (e) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open('GET', '/nn_start_learning', true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+document.getElementById('btn_stop_learning').onclick = function (e) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open('GET', '/nn_stop_learning', true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+

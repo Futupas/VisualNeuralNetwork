@@ -1,7 +1,7 @@
 {
   "data_main_html_file": "D:\\PROJECTS\\VisualNeuralNetwork\\prebetatest\\nn.html",
 
-  "website_prefixes": [ "http://192.168.0.111:2778/" ],
+  "website_prefixes": [ "http://localhost:2778/" ],
 
   "nn_layer_count": 3,
   "nn_neurons_count": 3,

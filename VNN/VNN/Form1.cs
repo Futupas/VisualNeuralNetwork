@@ -80,6 +80,25 @@ namespace VNN
             //Network = new NN(4, 3, 2, .1);
             //Website = new PanWebsite("http://192.168.0.111:2778/", WebsiteLife);
             Website.onWebSocketMessage = OnWebSocketMessage;
+
+            Task.Factory.StartNew(() => {
+                while (true)
+                {
+                    if (this.is_learning)
+                    {
+                        foreach (var learning_data in DATA.nn_learning_data)
+                        {
+                            Network.Teach(learning_data.inputs, learning_data.output);
+                            Website.WebSocketSend(JsonConvert.SerializeObject(new NNWebModel(Network, this)));
+                            if (DATA.nn_sleep_between_learning > 0)
+                            {
+                                Thread.Sleep((int)DATA.nn_sleep_between_learning);
+                            }
+                        }
+                    }
+                    
+                }
+            });
         }
 
         private void Btn_StartLearning_Click(object sender, EventArgs e)
@@ -90,7 +109,7 @@ namespace VNN
                     foreach (var learning_data in DATA.nn_learning_data)
                     {
                         Network.Teach(learning_data.inputs, learning_data.output);
-                        Website.WebSocketSend(JsonConvert.SerializeObject(new NNWebModel(Network)));
+                        Website.WebSocketSend(JsonConvert.SerializeObject(new NNWebModel(Network, this)));
                         if (DATA.nn_sleep_between_learning > 0)
                         {
                             Thread.Sleep((int)DATA.nn_sleep_between_learning);

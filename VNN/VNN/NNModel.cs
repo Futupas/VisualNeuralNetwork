@@ -9,7 +9,8 @@ namespace VNN
     public class NNWebModel
     {
         public List<List<object>> neurons;
-        public NNWebModel(NN nn)
+        public bool is_learning;
+        public NNWebModel(NN nn, Form1 form)
         {
             neurons = new List<List<object>>();
             foreach (Neuron[] layer in nn.Network)
@@ -36,6 +37,8 @@ namespace VNN
                 }
 
                 neurons.Add(model_layer);
+
+                this.is_learning = form.is_learning;
             }
         }
     }
