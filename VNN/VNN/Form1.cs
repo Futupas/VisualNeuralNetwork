@@ -31,6 +31,11 @@ namespace VNN
         {
             if (!website_started)
             {
+                if (Website == null)
+                {
+                    console1.AppendText("website is not created. try get data from fie first.\n");
+                    return;
+                }
                 Website.Start();
                 website_started = true;
                 console1.AppendText("website started\n");
@@ -58,6 +63,7 @@ namespace VNN
         private void BtnOpenHtml_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start(DATA.website_prefixes[0]);
+            console1.AppendText("web page opened\n");
             //System.Diagnostics.Process.Start("http://192.168.0.111:2778");
         }
 
@@ -74,7 +80,9 @@ namespace VNN
             string fpath = openFileDialog1.FileName;
             string json_data = File.ReadAllText(fpath);
             DATA = JsonConvert.DeserializeObject<FileModel>(json_data);
+            console1.AppendText("data received\n");
             Network = new NN((int)DATA.nn_layer_count, (int)DATA.nn_neurons_count, (int)DATA.nn_inputs_count, DATA.nn_learning_rate);
+            console1.AppendText("NN created\n");
 
             if (website_started)
             {
@@ -91,6 +99,7 @@ namespace VNN
                 
             Website = new PanWebsite(DATA.website_prefixes, WebsiteLife);
             Website.onWebSocketMessage = OnWebSocketMessage;
+            console1.AppendText("website created\n");
 
             learning_task = new Task(() => {
                 while (true)

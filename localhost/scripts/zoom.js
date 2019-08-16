@@ -1,6 +1,5 @@
 var nn_zoom = 100;
 SetNNZoom(nn_zoom, false);
-document.getElementById('zoom_input').mult_step = 1.5;
 
 document.getElementById('zoom_input').oninput = function(e) {
     var is_from_buttons = (e.data === undefined)

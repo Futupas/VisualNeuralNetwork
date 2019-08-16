@@ -16,6 +16,10 @@ namespace VNN
     {
         public PanResponse WebsiteLife(PanRequest request)
         {
+            Invoke(new Action(() =>
+            {
+                console1.AppendText($"-> {request.Method}: {request.Url}\n");
+            }));
             if (request.Address.Length >= 1)
             {
                 switch (request.Address[0])
@@ -126,7 +130,7 @@ namespace VNN
         {
             Invoke(new Action(() =>
             {
-                console1.AppendText($"->{message}\n");
+                //console1.AppendText($"->{message}\n");
             }));
         }
     }
