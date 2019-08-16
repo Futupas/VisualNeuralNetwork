@@ -13,7 +13,7 @@
 
   "website_prefixes": [ "http://192.168.0.111:2778/" ],
 
-  "nn_layer_count": 3,
+  "nn_layer_count": 1,
   "nn_neurons_count": 3,
   "nn_inputs_count": 2,
   "nn_learning_rate": 0.1,
@@ -27,9 +27,21 @@
 
   "nn_learning_data": [
     {
-      "inputs": [ 1.6, 1.6 ],
-      "output": 0.85
+      "inputs": [ 0, 0 ],
+      "output": 0
+    },
+    {
+      "inputs": [ 0, 1 ],
+      "output": 1
+    },
+    {
+      "inputs": [ 1, 0 ],
+      "output": 1
+    },
+    {
+      "inputs": [ 1, 1 ],
+      "output": 0
     }
   ],
-  "nn_sleep_between_learning": 10
+  "nn_sleep_between_learning": 0
 }
