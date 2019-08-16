@@ -2,7 +2,9 @@
   "data_main_html_file": "D:\\PROJECTS\\VisualNeuralNetwork\\localhost\\nn.html",
   "data_real_url_pathes": [
     [ "styles", "D:\\PROJECTS\\VisualNeuralNetwork\\localhost\\styles.css" ],
-    [ "app", "D:\\PROJECTS\\VisualNeuralNetwork\\localhost\\app.js" ]
+    [ "app", "D:\\PROJECTS\\VisualNeuralNetwork\\localhost\\app.js" ],
+    [ "scripts/1", "D:\\PROJECTS\\VisualNeuralNetwork\\localhost\\1.txt" ],
+    [ "scripts/2", "D:\\PROJECTS\\VisualNeuralNetwork\\localhost\\2.txt" ]
   ],
 
   "website_prefixes": [ "http://192.168.0.111:2778/" ],

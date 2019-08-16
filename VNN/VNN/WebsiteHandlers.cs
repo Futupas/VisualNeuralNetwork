@@ -93,12 +93,24 @@ namespace VNN
                             }
                         }
                         break;
+                    case "scripts":
+                        {
+                            string request_path_segment = request.Address[1];
+                            if (request.Address.Length < 2) return PanResponse.ReturnCode(404);
+                            List<string[]> json_records = DATA.data_real_url_pathes.FindAll((string[] e) => { return e[0] == "scripts/" + request_path_segment; });
+                            if (json_records.Count == 0) return PanResponse.ReturnCode(404);
+                            string real_path = json_records[0][1];
+                            return PanResponse.ReturnFile(real_path);
+                        }
+                        break;
                     default:
-                        string request_path_segment = request.Address[0];
-                        List<string[]> json_records = DATA.data_real_url_pathes.FindAll((string[] e) => { return e[0] == request_path_segment; });
-                        if (json_records.Count == 0) return PanResponse.ReturnCode(404);
-                        string real_path = json_records[0][1];
-                        return PanResponse.ReturnFile(real_path);
+                        {
+                            string request_path_segment = request.Address[0];
+                            List<string[]> json_records = DATA.data_real_url_pathes.FindAll((string[] e) => { return e[0] == request_path_segment; });
+                            if (json_records.Count == 0) return PanResponse.ReturnCode(404);
+                            string real_path = json_records[0][1];
+                            return PanResponse.ReturnFile(real_path);
+                        }
                         break;
                 }
 
