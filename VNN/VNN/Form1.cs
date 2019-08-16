@@ -92,8 +92,6 @@ namespace VNN
             Website = new PanWebsite(DATA.website_prefixes, WebsiteLife);
             Website.onWebSocketMessage = OnWebSocketMessage;
 
-            //learning_task
-            //learning_task.Dispose();
             learning_task = new Task(() => {
                 while (true)
                 {

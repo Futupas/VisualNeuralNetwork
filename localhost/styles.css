@@ -20,6 +20,7 @@
     z-index: 1;
     transform: scale(1);
     transform-origin: top left;
+    user-select: none;
 }
 #main > .layer{
     height: 100%;
