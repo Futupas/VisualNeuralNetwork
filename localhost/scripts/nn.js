@@ -1,32 +1,3 @@
-var DATA = undefined;
-var test_nn = undefined;
-
-
-function httpGetAsync(theUrl, callback)
-{
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
-    xmlHttp.open('GET', theUrl, true); // true for asynchronous 
-    xmlHttp.send(null);
-}
-httpGetAsync('/get_data', function(responseText){
-    DATA = JSON.parse(responseText);
-    httpGetAsync('/get_nn', function(responseText){
-        test_nn = JSON.parse(responseText);
-        GenerateNN();
-    });
-});
-// httpGetAsync('/get_nn', function(responseText){
-//     test_nn = JSON.parse(responseText);
-//     GenerateNN();
-// });
-
-var MAIN_DIV = document.getElementById('main');
-
-
 function GenerateNN() {
     // while (DATA === undefined || test_nn === undefined) {};
     var layers_count = test_nn.neurons.length;
@@ -148,6 +119,7 @@ function GenerateNN() {
     }
     
 }
+
 function GenerateLink(this_layer, from_neuron, to_neuron, value) {
     var link = document.createElement('div');
     link.classList.add('link');
@@ -244,41 +216,6 @@ function GenerateLink(this_layer, from_neuron, to_neuron, value) {
     return link;
 }
 
-// GenerateNN();
-
-document.getElementById('main_container').onmousemove = function(e) {
-    if (e.buttons == 1) {
-        document.getElementById('main_container').scrollTo(
-            document.getElementById('main_container').scrollLeft - e.movementX, 
-            document.getElementById('main_container').scrollTop - e.movementY);
-    }
-}
-
-
-
-socket = new WebSocket('ws://'+window.location.host+'/');
-socket.onopen = function(evt) { 
-        console.log('websocket open'); 
-        console.log(evt); 
-    };
-socket.onclose = function(evt) { 
-        console.log('websocket close'); 
-        console.log(evt); 
-    };
-socket.onmessage = function(evt) { 
-        // console.log('websocket message'); 
-        // console.log(evt);
-        var new_data = JSON.parse(evt.data);
-        UpdateNN(new_data);
-    };
-socket.onerror = function(evt) { 
-        console.log('websocket error'); 
-        console.log(evt); 
-    };
-
-
-
-    
 function UpdateNN(new_data) {
     for (var i_l = 0; i_l < test_nn.neurons.length; i_l++) {
         for (var i_n = 0; i_n < test_nn.neurons[i_l].length; i_n++) {
@@ -298,54 +235,5 @@ function UpdateNN(new_data) {
     } else {
         document.getElementById('btn_start_learning').style.cursor = 'auto';
         document.getElementById('btn_stop_learning').style.cursor = 'auto';
-    }
-}
-
-
-document.getElementById('btn_start_learning').onclick = function (e) {
-    httpGetAsync('/nn_start_learning', function(responseText){
-        var new_data = JSON.parse(responseText);
-        UpdateNN(new_data);
-    });
-}
-document.getElementById('btn_stop_learning').onclick = function (e) {
-    httpGetAsync('/nn_stop_learning', function(responseText){
-        var new_data = JSON.parse(responseText);
-        UpdateNN(new_data);
-    });
-}
-
-
-var nn_zoom = 100;
-SetNNZoom(nn_zoom, false);
-document.getElementById('zoom_input').mult_step = 1.5;
-
-document.getElementById('zoom_input').oninput = function(e) {
-    var is_from_buttons = (e.data === undefined)
-    var value = parseInt(this.value);
-
-    if (isNaN(value)) {
-        console.error('Zoom value is not a number!');
-    } else {
-        SetNNZoom(value, is_from_buttons);
-    }
-}
-
-
-function SetNNZoom(new_value, is_from_buttons) {
-    var zoom_input = document.getElementById('zoom_input');
-    if (!is_from_buttons) {
-        zoom_input.old_value = new_value;
-        zoom_input.value = new_value;
-        console.log(new_value);
-        MAIN_DIV.style.transform = 'scale('+(new_value / 100)+')';
-    } else {
-        var old_value = zoom_input.old_value;
-        var value = (new_value > old_value) ? (old_value * zoom_input.mult_step) : (old_value / zoom_input.mult_step);
-        zoom_input.old_value = value;
-        value = Math.round(value * 10) / 10;
-        zoom_input.value = value;
-        console.log(value);
-        MAIN_DIV.style.transform = 'scale('+(value / 100)+')';
     }
 }
