@@ -117,7 +117,42 @@ function GenerateNN() {
             }
         }
     }
-    
+
+
+    //inputs
+    var inputs_div = document.getElementById('nn_inputs');
+    inputs_div.innerHTML = '';
+    for (var i = 0; i < test_nn.neurons[0].length; i++) {
+        var input = document.createElement('input');
+        input.classList.add('nn_input_send_field');
+        input.type = 'number';
+        input.min = -3;
+        input.max = 3;
+        input.value = 0;
+        input.step = .1;
+        inputs_div.appendChild(input);
+    }
+    var sendbtn = document.createElement('button');
+    sendbtn.innerText = 'Get result';
+    sendbtn.onclick = function (e) {
+        var inputs = [];
+        var input_elements = document.querySelectorAll('#nn_inputs > input.nn_input_send_field');
+        for (var i = 0; i < test_nn.neurons[0].length; i++) {
+            inputs.push(input_elements[i].value);
+        }
+        var inputs_string = inputs.join(';');
+        httpGetAsync('/get_result_nn?inputs='+inputs_string, function(responseText){
+            try {
+                var new_nn = JSON.parse(responseText);
+                // test_nn = new_nn;
+                UpdateNN(new_nn);
+            } catch (ex) {
+                alert('error getting result');
+                console.error(responseText);
+            }
+        });
+    }
+    inputs_div.appendChild(sendbtn);
 }
 
 function GenerateLink(this_layer, from_neuron, to_neuron, value) {
